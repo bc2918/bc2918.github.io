@@ -1,0 +1,39 @@
+---
+title: "Beibei's website"
+output: 
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+---
+
+## This is Beibei's website
+
+This is my work for homework 4!
+
+
+## Link to my github page
+
+[My github](https://github.com/bc2918)
+
+
+## Link to my resume
+
+[About me](about.html)
+
+
+## My cats {.tabset}
+
+### Amiee
+
+![](images/amiee.jpeg)
+
+### Eclipse
+
+![](images/eclipse.jpeg)
+
+### Money
+
+![](images/money.jpeg)
+
+
