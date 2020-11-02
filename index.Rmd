@@ -7,8 +7,6 @@ output:
     toc_float: true
 ---
 
-## This is Beibei's website
-
 This is my work for homework 4!
 
 
