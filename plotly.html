@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Plotly</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.9.2.1/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="plotly.html">Plotly</a>
+</li>
+<li>
+  <a href="dashboard.html">Dashboard</a>
+</li>
+<li>
+  <a href="mailto:&lt;bc2918@columbia.edu&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/bc2918">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Plotly</h1>
+
+</div>
+
+
+<div id="loading-data" class="section level1">
+<h1>Loading data</h1>
+<p>Transform and subset NYC Airbnb data.</p>
+<pre class="r"><code># load data set
+data(&quot;nyc_airbnb&quot;)
+
+# data wrangling: select Manhattan neighborhood, price 500 - 1000
+nyc_airbnb = 
+  nyc_airbnb %&gt;% 
+  mutate(rating = review_scores_location / 2) %&gt;% 
+  select(neighbourhood_group, neighbourhood, rating, price, room_type, lat, long) %&gt;% 
+  filter(
+    price %in% 500:1000
+  ) %&gt;% 
+  drop_na(rating)</code></pre>
+</div>
+<div id="plotly-plots" class="section level1">
+<h1>Plotly plots</h1>
+<div id="scatter-plot" class="section level2">
+<h2>Scatter plot</h2>
+<pre class="r"><code>nyc_airbnb %&gt;% 
+  mutate(text_label = str_c(&quot;Price: $&quot;, price, &quot;\nRating: &quot;, rating)) %&gt;% 
+  plot_ly(
+    x = ~lat, y = ~long, color = ~price, text = ~text_label, 
+    alpha = .5, type = &quot;scatter&quot;, mode = &quot;markers&quot;, colors = &quot;plasma&quot;)</code></pre>
+<div id="htmlwidget-fc42e400cf2dd1a5aec2" style="width:768px;height:576px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fc42e400cf2dd1a5aec2">{"x":{"visdat":{"c9d53fb250a8":["function () ","plotlyVisDat"]},"cur_data":"c9d53fb250a8","attrs":{"c9d53fb250a8":{"x":{},"y":{},"text":{},"mode":"markers","color":{},"colors":"plasma","alpha":0.5,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"lat"},"yaxis":{"domain":[0,1],"automargin":true,"title":"long"},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[-74.0647642621361,-73.928279915243,-73.9256904716893,-73.9178520761338,-74.0262933626265,-73.941496791107,-73.9590555560549,-73.9137388425394,-73.9548994209608,-73.9493759768689,-73.9568838530726,-73.9241213398253,-73.9551853536842,-73.9542689146511,-73.9328552335819,-73.9548908332216,-73.9323600539858,-73.9882638644036,-73.9869880093617,-73.9556748466885,-73.9926848925838,-73.9937950116045,-73.9929940385375,-73.9235859717594,-73.9376721370459,-73.9223607183377,-73.9242377613431,-73.9308013729639,-73.9950856641231,-73.9914433711775,-73.9970718012685,-73.9917715809418,-73.9923407421333,-73.9922453180098,-73.8947303581629,-73.996866536885,-73.9955882810742,-73.9984913865547,-73.9924863659728,-73.9947403270384,-73.9958240630838,-73.9905077508549,-73.9944818870326,-73.9934249423247,-73.9933855291341,-73.9948197544292,-73.997593969478,-74.0025305231795,-74.0014849813665,-74.0047622605836,-73.9918839068673,-73.9921925396957,-73.9895696418322,-73.9940547957418,-73.993773992424,-74.0017781755725,-73.9935426888544,-73.9951761783253,-73.9981482040706,-73.9941436819457,-73.9970874602969,-73.9926712428751,-74.0045383251334,-73.9989708268975,-73.9936450136056,-74.0055540791417,-73.9917055665889,-74.004136603669,-74.0040085284723,-73.9931094700618,-73.9963258273834,-74.0008828015814,-74.0009031544542,-73.9916689850953,-73.9972921523646,-73.9931228975641,-74.0057305610279,-73.9922538504262,-74.0062249133444,-73.993807939349,-73.9938967685055,-73.9650207247973,-73.9628919290186,-73.9609626389285,-73.9636000228959,-73.968277448127,-73.9675740362436,-73.9681759404322,-73.96649914861,-73.9608553753629,-73.9660396805822,-73.9610277196255,-73.9678171788752,-73.966643040755,-73.9620074583727,-73.947176638062,-73.9294505454579,-73.9307320104455,-73.876306963756,-73.9255403157487,-73.9457781395501,-73.9348960048717,-73.9494579757934,-73.9476373723249,-73.9845679655589,-73.9799117182836,-73.9804312552217,-73.9895637908817,-73.9835502586877,-73.987937554251,-73.9894303438306,-73.9846938602908,-73.984181560717,-73.98167691658,-73.9910858846411,-73.991567372326,-73.9804949413431,-73.9839371656679,-73.9808794080782,-73.9867061281472,-73.9885929271696,-73.9799591789663,-73.9898042755866,-73.9798623944223,-73.9875936731589,-73.9891084464168,-74.0086867603471,-74.0054929480654,-74.0138703709717,-74.00617337587,-74.0091048264325,-74.0139978508335,-73.9607615435977,-73.9662380622264,-73.9626844086448,-73.9699207475563,-73.9902432322794,-73.9900456645994,-73.9847042187316,-73.9926163561962,-73.9914177246432,-73.9860113196384,-73.9890433558463,-73.9899946701001,-73.9898185110182,-73.9875052186684,-73.8002752300794,-73.8044678777475,-73.992377492159,-73.9856098948846,-73.8512707364599,-73.9736743328211,-73.9697707971578,-74.0299536493832,-73.9817367220815,-73.9875580895989,-73.9877805996591,-73.9875980466328,-73.9897163522756,-73.9719751650851,-73.9457333253035,-73.9539353366502,-73.9548509204437,-73.9531619524656,-73.955475702714,-73.9994397394339,-74.001143224805,-73.9955652668094,-73.9983802913391,-73.994758808714,-73.9922110953031,-73.9988194923889,-73.9990527109687,-74.0008459614877,-73.9963632893936,-73.9952216315887,-73.9965731070457,-73.9957516909377,-73.9992056416232,-73.9447877684867,-73.9437002998782,-73.9418036236814,-73.9459363326314,-73.9487104266999,-73.9566716842452,-73.9497636770024,-73.9467274175523,-73.946081187302,-73.9561987771286,-73.9553312036924,-73.9545750420272,-73.9872076044356,-73.9986299631696,-73.9893377137593,-73.9955025272162,-73.9917523101115,-73.990333735253,-73.9874884375975,-73.9919754454858,-73.9950277292373,-73.992831759604,-73.9868122870982,-73.993994561425,-73.9924563394399,-73.9878183971935,-73.9864209041923,-73.9930280699882,-73.9882036795724,-73.9911941156871,-73.9911464333178,-73.9901658657724,-73.9876745927643,-73.9967220370322,-73.989163139955,-73.9895000650727,-73.9878791688061,-73.9950252034535,-73.9919615598109,-73.9981710396973,-73.9932386566264,-73.9973601110729,-73.9939326487147,-73.9918559129552,-73.9790568386828,-73.9770914832253,-73.9790148752098,-73.9829270083562,-73.9765850761571,-73.9817644434394,-73.979071913781,-73.9806713924345,-73.9807616344488,-73.9962674111909,-73.9972857891774,-73.9973181044216,-73.978004242614,-73.9730709759636,-73.9787300514404,-73.9760652323767,-73.979576843875,-73.9760711349997,-73.979724180865,-73.9306241557694,-73.9849746340336,-73.9861610051014,-73.9883625386107,-73.9889471929869,-73.9847485466801,-73.9916367423568,-73.9878503947352,-73.9908534541374,-73.9920023183881,-73.9872796103773,-73.9875568629548,-73.9899185960283,-73.9802178818656,-73.9846362846723,-73.9621006902094,-73.9715834724367,-73.9732981788858,-73.9730768243988,-73.9805104867744,-73.9799856262042,-73.9878660657915,-73.9720889088002,-73.9825836399709,-73.9713209848653,-73.9804015845742,-73.9815411996793,-73.9813635100136,-73.9729509119284,-73.9715471085132,-73.9830907516398,-73.9769494357599,-73.9769186067141,-73.9836609695027,-73.9824755956499,-73.9675544910941,-73.9868278562784,-73.9677700213671,-73.9805320598442,-73.9840227976335,-73.9874827533619,-73.9718515139115,-73.9806579980382,-73.9715088980705,-73.9839205362438,-73.9689092143504,-73.9731973217294,-73.9706179686677,-73.9836155236287,-73.9822271082209,-73.9842036969604,-73.9673259492444,-73.9720003398374,-73.9787317534497,-73.9720476763748,-73.98279592363,-73.9051513976749,-73.9931076676952,-73.9945191905635,-73.9922667297145,-73.9927601664874,-73.9955293612277,-73.9923384531103,-73.9930162351084,-73.9930163098383,-73.9930144661549,-73.9964117235783,-73.9776140717716,-73.9742260746042,-73.9800543132824,-73.9785336409596,-73.9816230231748,-73.9751234996785,-74.0006027318871,-74.0003559881799,-73.9980614003257,-74.0023088443391,-73.9981527030454,-73.9985170212061,-73.9996272964384,-73.998013431015,-73.9982318492977,-74.0014028047864,-73.9995696498904,-73.9967798821628,-74.0017502813914,-74.0024236395994,-73.9982440713714,-74.002332297489,-74.0014873487052,-74.001868412493,-73.9968418310509,-74.0026217815919,-74.0010124651736,-74.0022917308657,-73.9977249844037,-73.9255362418781,-73.9245096874898,-73.983608754888,-73.9812577998947,-73.985933513667,-73.9874153098464,-73.9866497753058,-73.985065201098,-73.984364097093,-74.0069269242979,-74.0097527284091,-74.0047819786185,-74.0094025730465,-74.0093366779881,-74.007844699837,-74.0045348868674,-74.0040027104562,-74.0092604419397,-74.0110889367515,-74.0090532199372,-74.0028001629179,-74.0110887062879,-73.9686508412735,-73.9580734440742,-73.9620805906854,-73.9543110540013,-73.964138964075,-73.9616662591583,-73.9463580115075,-73.9672629427453,-73.9556633950209,-73.9563231666038,-73.9625147942163,-73.9588445436112,-73.9593167910591,-73.9650977424461,-73.9476826250292,-73.963665353466,-73.9503701696796,-73.966348002998,-73.9631857599289,-73.9559561400481,-73.9731383146982,-73.9758428126297,-73.9748198276372,-73.9642956800563,-73.9680815976561,-73.9690317875764,-73.9859376648022,-73.9818750569723,-73.980676184364,-73.9637342527632,-73.9692886459037,-73.9746742723418,-73.9619396348528,-73.9787357611925,-73.9720565935335,-73.9741508852325,-73.966829107913,-73.9712929391441,-73.9764186545536,-73.9748374227735,-73.9797622492882,-73.9693275129489,-73.974169783899,-73.986526359655,-73.9678153710591,-73.9823593564009,-73.9634825048919,-73.9822269208108,-73.9794229932922,-73.9799340782297,-73.9736791828841,-73.9840967908492,-73.9838710532974,-73.9852698781927,-73.9745970691776,-73.9754590749328,-74.0040962687696,-74.0043382351838,-74.0105874060133,-74.005841248651,-74.005266504589,-74.0075647149865,-74.0012892844093,-74.005680272322,-74.0036447541063,-74.0009044209929,-74.0067541056131,-74.0051339180305,-74.0025626618954,-74.002869456211,-74.0005972399306,-74.0074646035516,-74.0019447416217,-74.0033628830107,-74.0061868901095,-73.9985790040274,-73.8634916419095,-73.9552610709152,-73.9541022512113,-73.9428745841129,-73.9579563880815,-73.9632155301247,-73.9632094910587,-73.9535909710085,-73.9565872634074,-73.9632276918474,-73.9592518177302,-73.9371341720307,-73.9537587534401,-73.9565370202424,-73.9459684014442,-73.9610809204038,-73.9469547523782,-73.9471904240759,-73.9579612405029,-73.9621116577396,-73.947528214939,-73.9622589495271,-73.9467862561181,-73.9523630804406,-73.9476404256786,-73.9738673290849],"y":[40.5919297889197,40.7644830144764,40.7632592423435,40.7673824365124,40.6382024592726,40.6823658373725,40.6870014785813,40.6805445817841,40.6925753355639,40.6930603435491,40.6878551112542,40.6878498305078,40.6931964056898,40.6869501255014,40.6858867287516,40.6849217339974,40.6817158457944,40.6859915538448,40.6881034989652,40.6610753048124,40.6972304250489,40.6906522920115,40.6996395789643,40.6947645094237,40.6998789313182,40.6960130666502,40.7023430086789,40.7026036900828,40.7177528875602,40.7157728030858,40.7139895245119,40.7133277686041,40.7155586307191,40.7133293550336,40.6319811081987,40.6789281126484,40.6787989700066,40.6837970994088,40.6837036369633,40.6835841719964,40.6784608931694,40.7373061841501,40.7367281839667,40.7434062002144,40.7425267013214,40.7426939163051,40.7499998602805,40.7459941756751,40.7448107243416,40.7435661538196,40.7377311123275,40.736921567483,40.7484875513409,40.7479453957686,40.7364199082366,40.752116922805,40.7457321273606,40.7486985058982,40.7414007981252,40.7433868259757,40.7435319300948,40.7445555076579,40.7469509292916,40.7388836638597,40.7481629084992,40.7467227623751,40.7479515783149,40.7523963848719,40.7449699008639,40.7484623386291,40.7457443472934,40.7478736628491,40.7434635033051,40.7477526378577,40.7418799587879,40.749478703794,40.7444697875873,40.7438155303063,40.7418674415176,40.7496830893569,40.7457016526195,40.6889140812274,40.6872188831387,40.6876076778107,40.6841968259671,40.6924188555361,40.6906354555598,40.6931641007506,40.6849968027399,40.6874246910869,40.6876879705004,40.6854186367687,40.6876366656165,40.6934428308366,40.6839113715942,40.6719832376927,40.6761538539132,40.6662873174059,40.7583646067979,40.6652455322054,40.6333717607023,40.7936500434983,40.7958086088862,40.7858673958413,40.72601935403,40.7259208425204,40.7293259954735,40.7268924294222,40.7225617621855,40.7233807669421,40.7247341513482,40.7303195798608,40.7313864237592,40.7284286288524,40.7239915270709,40.7255895221794,40.7302900712013,40.7217423210115,40.7281897508958,40.7295776513946,40.7319682819949,40.7248829405495,40.7298266207487,40.7254159788968,40.7302708396513,40.7262002180963,40.7068057324477,40.7088981094728,40.7091756972971,40.7108348344098,40.7045861709822,40.7081590360878,40.6359305637506,40.650071163425,40.6322878017322,40.6488032439125,40.7410985539053,40.739940715172,40.7403192560986,40.7405599003703,40.7413964454982,40.7400111409806,40.7425411243348,40.7406788283207,40.7398738081405,40.7420484869215,40.736230713086,40.7619509388932,40.6788421140757,40.6786245150943,40.7193927499202,40.6910653424839,40.691960614231,40.6192257301647,40.7381690969502,40.7356181504748,40.7379745776516,40.7366381354251,40.7362918168183,40.6436553402047,40.7217923739226,40.7381331975969,40.7386105459781,40.7379311569804,40.7353316871319,40.731293144758,40.730486675807,40.7366129781551,40.7287752342035,40.734256464417,40.7336928438441,40.7291776886173,40.72973783963,40.72804029544,40.7273918604831,40.7363641915637,40.7346063244447,40.7353058606314,40.7300347842989,40.822492530858,40.8304829235045,40.8074497935081,40.8046874145586,40.8265148733878,40.8062135599684,40.8027601494395,40.8258370355071,40.8253193931195,40.8000727377789,40.8004851610291,40.8005083617329,40.7661833714718,40.7617115605588,40.7622027514134,40.7650369902012,40.7651042035016,40.765998893001,40.764522078674,40.7653959233026,40.7552344782983,40.7609317295756,40.7663358307397,40.7557125018358,40.7597832500666,40.7642126755702,40.76299999222,40.7579324697233,40.7623070024987,40.7634619718684,40.7605217977306,40.7578757657573,40.7630325910857,40.755144986877,40.7661606131763,40.7631057870305,40.7622756297543,40.7632794231099,40.7654057837446,40.7547899407761,40.7648393764712,40.7556228629996,40.7568537316773,40.7563425390419,40.7460151793503,40.7430771388546,40.7432511081656,40.7398845929453,40.7414633475373,40.7435618582202,40.7405151391717,40.742994518515,40.7429765874682,40.7194309364579,40.7194814944692,40.7199188759624,40.748950624749,40.7438656260399,40.750088496469,40.7492601335795,40.7476269325827,40.7471605225729,40.7492117164982,40.7578411898004,40.7188555084595,40.7205849401431,40.7186712959296,40.7187071786618,40.7183008900957,40.7225239631215,40.7163569846322,40.7208309000214,40.722382564707,40.7218053891579,40.7216741467099,40.7191908589888,40.7661672608787,40.7531408830224,40.7591249160698,40.7536228809936,40.753312201941,40.7538813132596,40.7637254224999,40.7572047430952,40.7463550728404,40.7612747963427,40.7436454004926,40.7537565911694,40.764836782391,40.7630275619688,40.7461127722604,40.7537474471277,40.753561476079,40.7518810907543,40.7653426730952,40.7637158638655,40.74362658131,40.7443176958108,40.7611468236142,40.7479047400687,40.7550239355647,40.7641864897801,40.7502897173417,40.7441994346257,40.7522791867025,40.7649315924439,40.7508293714219,40.7646664014445,40.7558466897982,40.7516235467026,40.7550076074298,40.7444663394425,40.7434316404569,40.7520645806659,40.7614929430437,40.7520955190291,40.7616490479816,40.7584776568802,40.7552398692408,40.6102142208185,40.7264603285973,40.7259123056135,40.7256861608759,40.7263144360611,40.7266452416234,40.7279727047001,40.7234689051583,40.7236074051926,40.723938730716,40.7222523174933,40.6716399374802,40.6785203640057,40.6798234605275,40.6830484573585,40.6669808671482,40.6703436733953,40.7236933250916,40.7270875398686,40.7243156413288,40.7222352283836,40.721493078054,40.7232816989826,40.7209853770219,40.7210917106392,40.724082650239,40.7221881754817,40.7206407408567,40.7239003520995,40.7233737922886,40.7254320809353,40.7221547508429,40.7276804302834,40.7221247347567,40.722868458444,40.7238123614125,40.7200306179413,40.7259971906099,40.7209031781654,40.7250588005841,40.7373705261069,40.736401722429,40.7586245508879,40.7591059101507,40.7560685200292,40.759515240272,40.7595031115904,40.7599357783493,40.7628929883007,40.7146442799465,40.7199827616585,40.721131183027,40.7149962287812,40.7194015237543,40.7190017472946,40.7192742723273,40.7181435083618,40.7151100138158,40.7136056851098,40.718931710051,40.71999938814,40.7191645083997,40.7667246599794,40.7735460014143,40.7608757063767,40.7771858740885,40.7612950471997,40.7627322128811,40.7770893866578,40.7693128333937,40.7758504422135,40.7694697129733,40.7636146745026,40.7634758181977,40.776789165547,40.7739738338582,40.7769105072525,40.7631404058711,40.7761350126385,40.7618182837806,40.7617037181152,40.7686968320673,40.7868919397111,40.7885068816468,40.7900225975177,40.7923258397372,40.7942746807804,40.7899150137808,40.7742792743926,40.7751974411174,40.772257513613,40.8018339404397,40.786973700204,40.7930683634615,40.796603056188,40.7814952513193,40.7948647732848,40.7826346736157,40.7908581591487,40.7842126166314,40.7843192312415,40.7837260689681,40.7794468300033,40.8010445831567,40.7876170887851,40.7789394050462,40.7958525462663,40.7770378077792,40.7969312086732,40.77527297385,40.7802385714178,40.7714969360257,40.7829476599374,40.7822729240005,40.7814862828931,40.7693229235268,40.7796608556566,40.6523776141222,40.7336499859386,40.734097739063,40.7315932852422,40.7364297190732,40.7404895517795,40.7394737105831,40.7344386808764,40.7352068867962,40.7348426508474,40.7345820600022,40.7347770253568,40.7362050942891,40.7340285358623,40.7306564807552,40.7338465927979,40.7345127699573,40.7384210493725,40.7299299043328,40.7299747159575,40.7364827176347,40.879375228855,40.7225292642738,40.7188470559643,40.7095767875765,40.7188853156629,40.7140062650727,40.7116953657991,40.7183957539774,40.7121284312777,40.7154230022579,40.7136097966851,40.705230412265,40.7220318086358,40.7121349626225,40.7187404791233,40.7159469297607,40.7156279504102,40.7081976952141,40.7189837193845,40.7195681508251,40.7138857821664,40.7167466250091,40.7140646251996,40.7137853242124,40.7150448665785,40.77786007713],"text":["Price: $625<br />Rating: 4","Price: $500<br />Rating: 4.5","Price: $500<br />Rating: 4","Price: $850<br />Rating: 3.5","Price: $800<br />Rating: 4.5","Price: $1000<br />Rating: 4","Price: $500<br />Rating: 5","Price: $700<br />Rating: 5","Price: $650<br />Rating: 3.5","Price: $500<br />Rating: 4","Price: $1000<br />Rating: 4.5","Price: $541<br />Rating: 3","Price: $900<br />Rating: 5","Price: $500<br />Rating: 5","Price: $500<br />Rating: 4","Price: $800<br />Rating: 4.5","Price: $500<br />Rating: 4.5","Price: $500<br />Rating: 5","Price: $500<br />Rating: 4.5","Price: $650<br />Rating: 5","Price: $800<br />Rating: 5","Price: $500<br />Rating: 4.5","Price: $800<br />Rating: 5","Price: $500<br />Rating: 4","Price: $500<br />Rating: 5","Price: $550<br />Rating: 4","Price: $800<br />Rating: 4.5","Price: $500<br />Rating: 5","Price: $550<br />Rating: 3","Price: $500<br />Rating: 5","Price: $500<br />Rating: 4.5","Price: $545<br />Rating: 4","Price: $785<br />Rating: 4.5","Price: $550<br />Rating: 5","Price: $500<br />Rating: 4","Price: $500<br />Rating: 5","Price: $525<br />Rating: 4.5","Price: $580<br />Rating: 5","Price: $600<br />Rating: 5","Price: $600<br />Rating: 5","Price: $750<br />Rating: 5","Price: $820<br />Rating: 5","Price: $649<br />Rating: 5","Price: $500<br />Rating: 5","Price: $500<br />Rating: 5","Price: $691<br />Rating: 4","Price: $550<br />Rating: 5","Price: $700<br />Rating: 5","Price: $549<br />Rating: 5","Price: $600<br />Rating: 5","Price: $775<br />Rating: 5","Price: $900<br />Rating: 5","Price: $596<br />Rating: 5","Price: $595<br />Rating: 5","Price: $699<br />Rating: 5","Price: $800<br />Rating: 4.5","Price: $699<br />Rating: 5","Price: $1000<br />Rating: 5","Price: $800<br />Rating: 5","Price: $500<br />Rating: 5","Price: $545<br />Rating: 5","Price: $704<br />Rating: 5","Price: $675<br />Rating: 5","Price: $500<br />Rating: 4.5","Price: $550<br />Rating: 5","Price: $600<br />Rating: 5","Price: $650<br />Rating: 5","Price: $550<br />Rating: 5","Price: $600<br />Rating: 5","Price: $599<br />Rating: 4.5","Price: $850<br />Rating: 5","Price: $750<br />Rating: 5","Price: $699<br />Rating: 5","Price: $999<br />Rating: 5","Price: $555<br />Rating: 5","Price: $600<br />Rating: 5","Price: $599<br />Rating: 5","Price: $915<br />Rating: 4.5","Price: $600<br />Rating: 5","Price: $650<br />Rating: 4.5","Price: $700<br />Rating: 5","Price: $550<br />Rating: 5","Price: $600<br />Rating: 4.5","Price: $500<br />Rating: 5","Price: $595<br />Rating: 4.5","Price: $899<br />Rating: 4.5","Price: $976<br />Rating: 5","Price: $999<br />Rating: 5","Price: $600<br />Rating: 4.5","Price: $600<br />Rating: 4.5","Price: $849<br />Rating: 4.5","Price: $600<br />Rating: 5","Price: $790<br />Rating: 5","Price: $500<br />Rating: 4.5","Price: $500<br />Rating: 5","Price: $575<br />Rating: 4.5","Price: $500<br />Rating: 4","Price: $575<br />Rating: 4.5","Price: $700<br />Rating: 5","Price: $650<br />Rating: 5","Price: $525<br />Rating: 4.5","Price: $529<br />Rating: 4","Price: $990<br />Rating: 5","Price: $650<br />Rating: 4.5","Price: $544<br />Rating: 5","Price: $950<br />Rating: 5","Price: $815<br />Rating: 5","Price: $750<br />Rating: 5","Price: $675<br />Rating: 5","Price: $600<br />Rating: 4.5","Price: $600<br />Rating: 3","Price: $600<br />Rating: 5","Price: $600<br />Rating: 5","Price: $600<br />Rating: 4.5","Price: $900<br />Rating: 5","Price: $600<br />Rating: 5","Price: $700<br />Rating: 5","Price: $580<br />Rating: 4.5","Price: $525<br />Rating: 5","Price: $600<br />Rating: 5","Price: $550<br />Rating: 5","Price: $900<br />Rating: 5","Price: $630<br />Rating: 5","Price: $500<br />Rating: 4.5","Price: $750<br />Rating: 5","Price: $500<br />Rating: 5","Price: $799<br />Rating: 5","Price: $550<br />Rating: 5","Price: $600<br />Rating: 5","Price: $500<br />Rating: 5","Price: $500<br />Rating: 5","Price: $927<br />Rating: 4.5","Price: $500<br />Rating: 4.5","Price: $740<br />Rating: 4.5","Price: $500<br />Rating: 4.5","Price: $800<br />Rating: 5","Price: $525<br />Rating: 4.5","Price: $600<br />Rating: 4.5","Price: $850<br />Rating: 5","Price: $550<br />Rating: 5","Price: $699<br />Rating: 5","Price: $700<br />Rating: 5","Price: $826<br />Rating: 5","Price: $700<br />Rating: 5","Price: $650<br />Rating: 5","Price: $838<br />Rating: 5","Price: $895<br />Rating: 5","Price: $950<br />Rating: 5","Price: $545<br />Rating: 5","Price: $500<br />Rating: 4.5","Price: $550<br />Rating: 5","Price: $800<br />Rating: 5","Price: $649<br />Rating: 5","Price: $500<br />Rating: 4.5","Price: $595<br />Rating: 5","Price: $500<br />Rating: 5","Price: $500<br />Rating: 5","Price: $650<br />Rating: 5","Price: $520<br />Rating: 5","Price: $500<br />Rating: 5","Price: $749<br />Rating: 5","Price: $599<br />Rating: 4.5","Price: $599<br />Rating: 3.5","Price: $599<br />Rating: 4","Price: $650<br />Rating: 5","Price: $850<br />Rating: 5","Price: $700<br />Rating: 5","Price: $649<br />Rating: 5","Price: $834<br />Rating: 5","Price: $550<br />Rating: 5","Price: $650<br />Rating: 5","Price: $500<br />Rating: 4","Price: $500<br />Rating: 5","Price: $650<br />Rating: 5","Price: $601<br />Rating: 5","Price: $599<br />Rating: 5","Price: $600<br />Rating: 5","Price: $590<br />Rating: 5","Price: $850<br />Rating: 5","Price: $675<br />Rating: 4.5","Price: $600<br />Rating: 4.5","Price: $650<br />Rating: 5","Price: $1000<br />Rating: 4.5","Price: $750<br />Rating: 4.5","Price: $500<br />Rating: 5","Price: $735<br />Rating: 5","Price: $500<br />Rating: 3.5","Price: $600<br />Rating: 4.5","Price: $500<br />Rating: 5","Price: $575<br />Rating: 4.5","Price: $600<br />Rating: 5","Price: $500<br />Rating: 5","Price: $750<br />Rating: 5","Price: $567<br />Rating: 5","Price: $565<br />Rating: 4.5","Price: $500<br />Rating: 5","Price: $588<br />Rating: 5","Price: $500<br />Rating: 4.5","Price: $599<br />Rating: 5","Price: $500<br />Rating: 5","Price: $600<br />Rating: 5","Price: $550<br />Rating: 5","Price: $500<br />Rating: 5","Price: $550<br />Rating: 5","Price: $618<br />Rating: 5","Price: $875<br />Rating: 5","Price: $900<br />Rating: 5","Price: $850<br />Rating: 5","Price: $590<br />Rating: 5","Price: $860<br />Rating: 4.5","Price: $600<br />Rating: 5","Price: $875<br />Rating: 4.5","Price: $950<br />Rating: 4.5","Price: $600<br />Rating: 5","Price: $567<br />Rating: 5","Price: $599<br />Rating: 5","Price: $539<br />Rating: 4.5","Price: $500<br />Rating: 4.5","Price: $695<br />Rating: 5","Price: $600<br />Rating: 5","Price: $525<br />Rating: 5","Price: $500<br />Rating: 5","Price: $800<br />Rating: 4.5","Price: $700<br />Rating: 5","Price: $1000<br />Rating: 5","Price: $750<br />Rating: 5","Price: $650<br />Rating: 5","Price: $600<br />Rating: 4.5","Price: $750<br />Rating: 5","Price: $650<br />Rating: 5","Price: $927<br />Rating: 4.5","Price: $550<br />Rating: 5","Price: $575<br />Rating: 4.5","Price: $699<br />Rating: 5","Price: $500<br />Rating: 4","Price: $595<br />Rating: 5","Price: $599<br />Rating: 5","Price: $595<br />Rating: 5","Price: $650<br />Rating: 4.5","Price: $925<br />Rating: 5","Price: $500<br />Rating: 5","Price: $700<br />Rating: 5","Price: $650<br />Rating: 5","Price: $500<br />Rating: 5","Price: $1000<br />Rating: 4.5","Price: $700<br />Rating: 5","Price: $999<br />Rating: 3","Price: $1000<br />Rating: 5","Price: $500<br />Rating: 5","Price: $600<br />Rating: 5","Price: $700<br />Rating: 5","Price: $500<br />Rating: 5","Price: $600<br />Rating: 5","Price: $586<br />Rating: 4.5","Price: $600<br />Rating: 4","Price: $710<br />Rating: 5","Price: $690<br />Rating: 5","Price: $550<br />Rating: 4.5","Price: $649<br />Rating: 4.5","Price: $599<br />Rating: 5","Price: $599<br />Rating: 5","Price: $650<br />Rating: 5","Price: $795<br />Rating: 5","Price: $699<br />Rating: 5","Price: $599<br />Rating: 5","Price: $700<br />Rating: 5","Price: $599<br />Rating: 5","Price: $780<br />Rating: 5","Price: $500<br />Rating: 5","Price: $500<br />Rating: 5","Price: $799<br />Rating: 4.5","Price: $599<br />Rating: 5","Price: $523<br />Rating: 5","Price: $720<br />Rating: 5","Price: $500<br />Rating: 5","Price: $597<br />Rating: 5","Price: $850<br />Rating: 4.5","Price: $900<br />Rating: 5","Price: $799<br />Rating: 4.5","Price: $650<br />Rating: 4.5","Price: $500<br />Rating: 5","Price: $500<br />Rating: 5","Price: $999<br />Rating: 5","Price: $649<br />Rating: 3","Price: $529<br />Rating: 5","Price: $650<br />Rating: 5","Price: $580<br />Rating: 5","Price: $800<br />Rating: 5","Price: $649<br />Rating: 5","Price: $800<br />Rating: 5","Price: $524<br />Rating: 4.5","Price: $650<br />Rating: 4.5","Price: $550<br />Rating: 5","Price: $927<br />Rating: 5","Price: $799<br />Rating: 5","Price: $650<br />Rating: 5","Price: $500<br />Rating: 5","Price: $500<br />Rating: 5","Price: $500<br />Rating: 4.5","Price: $500<br />Rating: 5","Price: $533<br />Rating: 5","Price: $525<br />Rating: 5","Price: $600<br />Rating: 5","Price: $985<br />Rating: 5","Price: $989<br />Rating: 5","Price: $650<br />Rating: 5","Price: $600<br />Rating: 4.5","Price: $525<br />Rating: 5","Price: $500<br />Rating: 5","Price: $545<br />Rating: 5","Price: $550<br />Rating: 5","Price: $650<br />Rating: 5","Price: $568<br />Rating: 5","Price: $650<br />Rating: 5","Price: $990<br />Rating: 5","Price: $721<br />Rating: 5","Price: $800<br />Rating: 5","Price: $575<br />Rating: 5","Price: $649<br />Rating: 4.5","Price: $900<br />Rating: 5","Price: $589<br />Rating: 5","Price: $595<br />Rating: 5","Price: $899<br />Rating: 5","Price: $662<br />Rating: 5","Price: $525<br />Rating: 5","Price: $595<br />Rating: 5","Price: $850<br />Rating: 5","Price: $500<br />Rating: 5","Price: $1000<br />Rating: 5","Price: $599<br />Rating: 5","Price: $500<br />Rating: 5","Price: $500<br />Rating: 5","Price: $590<br />Rating: 5","Price: $595<br />Rating: 5","Price: $500<br />Rating: 4.5","Price: $925<br />Rating: 5","Price: $700<br />Rating: 5","Price: $650<br />Rating: 5","Price: $540<br />Rating: 5","Price: $580<br />Rating: 5","Price: $500<br />Rating: 5","Price: $500<br />Rating: 5","Price: $685<br />Rating: 5","Price: $599<br />Rating: 5","Price: $530<br />Rating: 5","Price: $599<br />Rating: 5","Price: $550<br />Rating: 5","Price: $1000<br />Rating: 4","Price: $600<br />Rating: 4.5","Price: $550<br />Rating: 5","Price: $700<br />Rating: 5","Price: $750<br />Rating: 5","Price: $877<br />Rating: 5","Price: $550<br />Rating: 5","Price: $999<br />Rating: 5","Price: $590<br />Rating: 5","Price: $800<br />Rating: 5","Price: $595<br />Rating: 5","Price: $600<br />Rating: 5","Price: $575<br />Rating: 5","Price: $689<br />Rating: 5","Price: $500<br />Rating: 5","Price: $600<br />Rating: 4.5","Price: $900<br />Rating: 4.5","Price: $795<br />Rating: 5","Price: $589<br />Rating: 5","Price: $500<br />Rating: 5","Price: $550<br />Rating: 5","Price: $600<br />Rating: 5","Price: $899<br />Rating: 5","Price: $749<br />Rating: 5","Price: $800<br />Rating: 4.5","Price: $595<br />Rating: 5","Price: $700<br />Rating: 5","Price: $600<br />Rating: 4.5","Price: $995<br />Rating: 5","Price: $700<br />Rating: 5","Price: $600<br />Rating: 5","Price: $500<br />Rating: 4.5","Price: $500<br />Rating: 5","Price: $560<br />Rating: 5","Price: $650<br />Rating: 5","Price: $899<br />Rating: 5","Price: $950<br />Rating: 5","Price: $599<br />Rating: 5","Price: $800<br />Rating: 5","Price: $500<br />Rating: 5","Price: $509<br />Rating: 5","Price: $799<br />Rating: 5","Price: $980<br />Rating: 4","Price: $550<br />Rating: 5","Price: $600<br />Rating: 4.5","Price: $500<br />Rating: 5","Price: $850<br />Rating: 5","Price: $600<br />Rating: 5","Price: $650<br />Rating: 5","Price: $500<br />Rating: 5","Price: $500<br />Rating: 5","Price: $721<br />Rating: 4.5","Price: $500<br />Rating: 5","Price: $500<br />Rating: 5","Price: $550<br />Rating: 4.5","Price: $500<br />Rating: 5","Price: $800<br />Rating: 5","Price: $599<br />Rating: 5","Price: $500<br />Rating: 5","Price: $795<br />Rating: 4.5","Price: $650<br />Rating: 5","Price: $550<br />Rating: 5","Price: $600<br />Rating: 5","Price: $650<br />Rating: 5","Price: $600<br />Rating: 5","Price: $725<br />Rating: 5","Price: $600<br />Rating: 5","Price: $500<br />Rating: 5","Price: $500<br />Rating: 5","Price: $500<br />Rating: 5","Price: $1000<br />Rating: 5","Price: $625<br />Rating: 4.5","Price: $530<br />Rating: 5","Price: $600<br />Rating: 5","Price: $500<br />Rating: 5","Price: $600<br />Rating: 5","Price: $600<br />Rating: 5","Price: $611<br />Rating: 5","Price: $550<br />Rating: 5","Price: $650<br />Rating: 5","Price: $550<br />Rating: 5","Price: $555<br />Rating: 5","Price: $700<br />Rating: 5","Price: $550<br />Rating: 5","Price: $595<br />Rating: 5","Price: $700<br />Rating: 5","Price: $675<br />Rating: 5","Price: $515<br />Rating: 4.5","Price: $725<br />Rating: 5","Price: $500<br />Rating: 4","Price: $600<br />Rating: 5","Price: $600<br />Rating: 5","Price: $700<br />Rating: 4","Price: $550<br />Rating: 5","Price: $700<br />Rating: 5","Price: $500<br />Rating: 5","Price: $500<br />Rating: 5","Price: $799<br />Rating: 5","Price: $500<br />Rating: 4.5","Price: $500<br />Rating: 5","Price: $945<br />Rating: 5","Price: $500<br />Rating: 5","Price: $699<br />Rating: 5","Price: $1000<br />Rating: 5","Price: $600<br />Rating: 5","Price: $999<br />Rating: 5","Price: $500<br />Rating: 5","Price: $700<br />Rating: 5","Price: $799<br />Rating: 5","Price: $899<br />Rating: 5","Price: $550<br />Rating: 5","Price: $899<br />Rating: 5","Price: $550<br />Rating: 5","Price: $735<br />Rating: 5","Price: $949<br />Rating: 5"],"mode":"markers","type":"scatter","marker":{"colorbar":{"title":"price","ticklen":2},"cmin":500,"cmax":1000,"colorscale":[["0","rgba(13,8,135,0.5)"],["0.0416666666666667","rgba(39,5,146,0.5)"],["0.0833333333333333","rgba(59,4,154,0.5)"],["0.125","rgba(76,2,161,0.5)"],["0.166666666666667","rgba(93,1,166,0.5)"],["0.208333333333333","rgba(110,0,168,0.5)"],["0.25","rgba(126,3,168,0.5)"],["0.291666666666667","rgba(141,11,165,0.5)"],["0.333333333333333","rgba(156,23,158,0.5)"],["0.375","rgba(169,35,149,0.5)"],["0.416666666666667","rgba(181,47,140,0.5)"],["0.458333333333333","rgba(193,59,130,0.5)"],["0.5","rgba(204,71,121,0.5)"],["0.541666666666667","rgba(213,83,111,0.5)"],["0.583333333333333","rgba(222,95,101,0.5)"],["0.625","rgba(229,107,93,0.5)"],["0.666666666666667","rgba(237,121,83,0.5)"],["0.708333333333333","rgba(243,134,74,0.5)"],["0.75","rgba(248,148,65,0.5)"],["0.791666666666667","rgba(252,163,56,0.5)"],["0.833333333333333","rgba(253,179,47,0.5)"],["0.875","rgba(253,195,40,0.5)"],["0.916666666666667","rgba(251,213,36,0.5)"],["0.958333333333333","rgba(246,231,38,0.5)"],["1","rgba(240,249,33,0.5)"]],"showscale":false,"color":[625,500,500,850,800,1000,500,700,650,500,1000,541,900,500,500,800,500,500,500,650,800,500,800,500,500,550,800,500,550,500,500,545,785,550,500,500,525,580,600,600,750,820,649,500,500,691,550,700,549,600,775,900,596,595,699,800,699,1000,800,500,545,704,675,500,550,600,650,550,600,599,850,750,699,999,555,600,599,915,600,650,700,550,600,500,595,899,976,999,600,600,849,600,790,500,500,575,500,575,700,650,525,529,990,650,544,950,815,750,675,600,600,600,600,600,900,600,700,580,525,600,550,900,630,500,750,500,799,550,600,500,500,927,500,740,500,800,525,600,850,550,699,700,826,700,650,838,895,950,545,500,550,800,649,500,595,500,500,650,520,500,749,599,599,599,650,850,700,649,834,550,650,500,500,650,601,599,600,590,850,675,600,650,1000,750,500,735,500,600,500,575,600,500,750,567,565,500,588,500,599,500,600,550,500,550,618,875,900,850,590,860,600,875,950,600,567,599,539,500,695,600,525,500,800,700,1000,750,650,600,750,650,927,550,575,699,500,595,599,595,650,925,500,700,650,500,1000,700,999,1000,500,600,700,500,600,586,600,710,690,550,649,599,599,650,795,699,599,700,599,780,500,500,799,599,523,720,500,597,850,900,799,650,500,500,999,649,529,650,580,800,649,800,524,650,550,927,799,650,500,500,500,500,533,525,600,985,989,650,600,525,500,545,550,650,568,650,990,721,800,575,649,900,589,595,899,662,525,595,850,500,1000,599,500,500,590,595,500,925,700,650,540,580,500,500,685,599,530,599,550,1000,600,550,700,750,877,550,999,590,800,595,600,575,689,500,600,900,795,589,500,550,600,899,749,800,595,700,600,995,700,600,500,500,560,650,899,950,599,800,500,509,799,980,550,600,500,850,600,650,500,500,721,500,500,550,500,800,599,500,795,650,550,600,650,600,725,600,500,500,500,1000,625,530,600,500,600,600,611,550,650,550,555,700,550,595,700,675,515,725,500,600,600,700,550,700,500,500,799,500,500,945,500,699,1000,600,999,500,700,799,899,550,899,550,735,949],"line":{"colorbar":{"title":"","ticklen":2},"cmin":500,"cmax":1000,"colorscale":[["0","rgba(13,8,135,1)"],["0.0416666666666667","rgba(39,5,146,1)"],["0.0833333333333333","rgba(59,4,154,1)"],["0.125","rgba(76,2,161,1)"],["0.166666666666667","rgba(93,1,166,1)"],["0.208333333333333","rgba(110,0,168,1)"],["0.25","rgba(126,3,168,1)"],["0.291666666666667","rgba(141,11,165,1)"],["0.333333333333333","rgba(156,23,158,1)"],["0.375","rgba(169,35,149,1)"],["0.416666666666667","rgba(181,47,140,1)"],["0.458333333333333","rgba(193,59,130,1)"],["0.5","rgba(204,71,121,1)"],["0.541666666666667","rgba(213,83,111,1)"],["0.583333333333333","rgba(222,95,101,1)"],["0.625","rgba(229,107,93,1)"],["0.666666666666667","rgba(237,121,83,1)"],["0.708333333333333","rgba(243,134,74,1)"],["0.75","rgba(248,148,65,1)"],["0.791666666666667","rgba(252,163,56,1)"],["0.833333333333333","rgba(253,179,47,1)"],["0.875","rgba(253,195,40,1)"],["0.916666666666667","rgba(251,213,36,1)"],["0.958333333333333","rgba(246,231,38,1)"],["1","rgba(240,249,33,1)"]],"showscale":false,"color":[625,500,500,850,800,1000,500,700,650,500,1000,541,900,500,500,800,500,500,500,650,800,500,800,500,500,550,800,500,550,500,500,545,785,550,500,500,525,580,600,600,750,820,649,500,500,691,550,700,549,600,775,900,596,595,699,800,699,1000,800,500,545,704,675,500,550,600,650,550,600,599,850,750,699,999,555,600,599,915,600,650,700,550,600,500,595,899,976,999,600,600,849,600,790,500,500,575,500,575,700,650,525,529,990,650,544,950,815,750,675,600,600,600,600,600,900,600,700,580,525,600,550,900,630,500,750,500,799,550,600,500,500,927,500,740,500,800,525,600,850,550,699,700,826,700,650,838,895,950,545,500,550,800,649,500,595,500,500,650,520,500,749,599,599,599,650,850,700,649,834,550,650,500,500,650,601,599,600,590,850,675,600,650,1000,750,500,735,500,600,500,575,600,500,750,567,565,500,588,500,599,500,600,550,500,550,618,875,900,850,590,860,600,875,950,600,567,599,539,500,695,600,525,500,800,700,1000,750,650,600,750,650,927,550,575,699,500,595,599,595,650,925,500,700,650,500,1000,700,999,1000,500,600,700,500,600,586,600,710,690,550,649,599,599,650,795,699,599,700,599,780,500,500,799,599,523,720,500,597,850,900,799,650,500,500,999,649,529,650,580,800,649,800,524,650,550,927,799,650,500,500,500,500,533,525,600,985,989,650,600,525,500,545,550,650,568,650,990,721,800,575,649,900,589,595,899,662,525,595,850,500,1000,599,500,500,590,595,500,925,700,650,540,580,500,500,685,599,530,599,550,1000,600,550,700,750,877,550,999,590,800,595,600,575,689,500,600,900,795,589,500,550,600,899,749,800,595,700,600,995,700,600,500,500,560,650,899,950,599,800,500,509,799,980,550,600,500,850,600,650,500,500,721,500,500,550,500,800,599,500,795,650,550,600,650,600,725,600,500,500,500,1000,625,530,600,500,600,600,611,550,650,550,555,700,550,595,700,675,515,725,500,600,600,700,550,700,500,500,799,500,500,945,500,699,1000,600,999,500,700,799,899,550,899,550,735,949]}},"xaxis":"x","yaxis":"y","frame":null},{"x":[-74.0647642621361,-73.8002752300794],"y":[40.5919297889197,40.879375228855],"type":"scatter","mode":"markers","opacity":0,"hoverinfo":"none","showlegend":false,"marker":{"colorbar":{"title":"price","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"cmin":500,"cmax":1000,"colorscale":[["0","rgba(13,8,135,0.5)"],["0.0416666666666667","rgba(39,5,146,0.5)"],["0.0833333333333333","rgba(59,4,154,0.5)"],["0.125","rgba(76,2,161,0.5)"],["0.166666666666667","rgba(93,1,166,0.5)"],["0.208333333333333","rgba(110,0,168,0.5)"],["0.25","rgba(126,3,168,0.5)"],["0.291666666666667","rgba(141,11,165,0.5)"],["0.333333333333333","rgba(156,23,158,0.5)"],["0.375","rgba(169,35,149,0.5)"],["0.416666666666667","rgba(181,47,140,0.5)"],["0.458333333333333","rgba(193,59,130,0.5)"],["0.5","rgba(204,71,121,0.5)"],["0.541666666666667","rgba(213,83,111,0.5)"],["0.583333333333333","rgba(222,95,101,0.5)"],["0.625","rgba(229,107,93,0.5)"],["0.666666666666667","rgba(237,121,83,0.5)"],["0.708333333333333","rgba(243,134,74,0.5)"],["0.75","rgba(248,148,65,0.5)"],["0.791666666666667","rgba(252,163,56,0.5)"],["0.833333333333333","rgba(253,179,47,0.5)"],["0.875","rgba(253,195,40,0.5)"],["0.916666666666667","rgba(251,213,36,0.5)"],["0.958333333333333","rgba(246,231,38,0.5)"],["1","rgba(240,249,33,0.5)"]],"showscale":true,"color":[500,1000],"line":{"color":"rgba(255,127,14,1)"}},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="box-plot" class="section level2">
+<h2>Box plot</h2>
+<pre class="r"><code>nyc_airbnb %&gt;% 
+  mutate(neighbourhood = fct_reorder(neighbourhood, price)) %&gt;% 
+  plot_ly(
+    y = ~neighbourhood, x = ~price, color = ~neighbourhood,
+    type = &quot;box&quot;, colors = &quot;plasma&quot;, showlegend = FALSE) </code></pre>
+<div id="htmlwidget-581ebcf25e932ee40eff" style="width:768px;height:576px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-581ebcf25e932ee40eff">{"x":{"visdat":{"c9d551f4e3b0":["function () ","plotlyVisDat"]},"cur_data":"c9d551f4e3b0","attrs":{"c9d551f4e3b0":{"y":{},"x":{},"showlegend":false,"color":{},"colors":"plasma","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"box"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"price"},"yaxis":{"domain":[0,1],"automargin":true,"title":"neighbourhood","type":"category","categoryorder":"array","categoryarray":["Astoria","Boerum Hill","Bushwick","Canarsie","Fort Hamilton","Kensington","Mill Basin","Williamsbridge","Windsor Terrace","Gramercy","Gowanus","Chinatown","Forest Hills","Theater District","Sunnyside","Nolita","NoHo","Crown Heights","Financial District","Little Italy","East Flatbush","Carroll Gardens","Hell's Kitchen","Bedford-Stuyvesant","Greenpoint","Murray Hill","SoHo","Clinton Hill","East Village","Harlem","Lower East Side","Tribeca","Upper East Side","Upper West Side","West Village","Park Slope","Flatbush","Arrochar","Greenwich Village","Midtown","Chelsea","Williamsburg","East Harlem","Long Island City","Prospect-Lefferts Gardens","Flatiron District","East Elmhurst","Kips Bay","Fort Greene","Bay Ridge","Brooklyn Heights","Flushing"]},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"fillcolor":"rgba(13,8,135,0.5)","y":["Astoria","Astoria","Astoria"],"x":[500,500,850],"showlegend":false,"type":"box","orientation":"h","name":"Astoria","marker":{"color":"rgba(13,8,135,1)","line":{"color":"rgba(13,8,135,1)"}},"line":{"color":"rgba(13,8,135,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(27,6,141,0.5)","y":["Boerum Hill","Boerum Hill"],"x":[500,500],"showlegend":false,"type":"box","orientation":"h","name":"Boerum Hill","marker":{"color":"rgba(27,6,141,1)","line":{"color":"rgba(27,6,141,1)"}},"line":{"color":"rgba(27,6,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(38,5,145,0.5)","y":["Bushwick","Bushwick","Bushwick","Bushwick","Bushwick"],"x":[500,500,550,800,500],"showlegend":false,"type":"box","orientation":"h","name":"Bushwick","marker":{"color":"rgba(38,5,145,1)","line":{"color":"rgba(38,5,145,1)"}},"line":{"color":"rgba(38,5,145,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(47,5,150,0.5)","y":["Canarsie"],"x":[500],"showlegend":false,"type":"box","orientation":"h","name":"Canarsie","marker":{"color":"rgba(47,5,150,1)","line":{"color":"rgba(47,5,150,1)"}},"line":{"color":"rgba(47,5,150,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(56,4,154,0.5)","y":["Fort Hamilton"],"x":[500],"showlegend":false,"type":"box","orientation":"h","name":"Fort Hamilton","marker":{"color":"rgba(56,4,154,1)","line":{"color":"rgba(56,4,154,1)"}},"line":{"color":"rgba(56,4,154,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(65,4,157,0.5)","y":["Kensington"],"x":[500],"showlegend":false,"type":"box","orientation":"h","name":"Kensington","marker":{"color":"rgba(65,4,157,1)","line":{"color":"rgba(65,4,157,1)"}},"line":{"color":"rgba(65,4,157,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(73,3,160,0.5)","y":["Mill Basin"],"x":[500],"showlegend":false,"type":"box","orientation":"h","name":"Mill Basin","marker":{"color":"rgba(73,3,160,1)","line":{"color":"rgba(73,3,160,1)"}},"line":{"color":"rgba(73,3,160,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(81,2,163,0.5)","y":["Williamsbridge"],"x":[500],"showlegend":false,"type":"box","orientation":"h","name":"Williamsbridge","marker":{"color":"rgba(81,2,163,1)","line":{"color":"rgba(81,2,163,1)"}},"line":{"color":"rgba(81,2,163,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(89,1,165,0.5)","y":["Windsor Terrace"],"x":[500],"showlegend":false,"type":"box","orientation":"h","name":"Windsor Terrace","marker":{"color":"rgba(89,1,165,1)","line":{"color":"rgba(89,1,165,1)"}},"line":{"color":"rgba(89,1,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(97,0,167,0.5)","y":["Gramercy","Gramercy","Gramercy","Gramercy","Gramercy"],"x":[595,500,500,650,520],"showlegend":false,"type":"box","orientation":"h","name":"Gramercy","marker":{"color":"rgba(97,0,167,1)","line":{"color":"rgba(97,0,167,1)"}},"line":{"color":"rgba(97,0,167,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(105,0,168,0.5)","y":["Gowanus","Gowanus"],"x":[545,500],"showlegend":false,"type":"box","orientation":"h","name":"Gowanus","marker":{"color":"rgba(105,0,168,1)","line":{"color":"rgba(105,0,168,1)"}},"line":{"color":"rgba(105,0,168,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(113,0,168,0.5)","y":["Chinatown","Chinatown","Chinatown","Chinatown","Chinatown","Chinatown"],"x":[550,500,500,545,785,550],"showlegend":false,"type":"box","orientation":"h","name":"Chinatown","marker":{"color":"rgba(113,0,168,1)","line":{"color":"rgba(113,0,168,1)"}},"line":{"color":"rgba(113,0,168,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(120,1,168,0.5)","y":["Forest Hills"],"x":[550],"showlegend":false,"type":"box","orientation":"h","name":"Forest Hills","marker":{"color":"rgba(120,1,168,1)","line":{"color":"rgba(120,1,168,1)"}},"line":{"color":"rgba(120,1,168,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(128,4,168,0.5)","y":["Theater District","Theater District","Theater District","Theater District","Theater District","Theater District","Theater District"],"x":[500,500,685,599,530,599,550],"showlegend":false,"type":"box","orientation":"h","name":"Theater District","marker":{"color":"rgba(128,4,168,1)","line":{"color":"rgba(128,4,168,1)"}},"line":{"color":"rgba(128,4,168,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(135,7,166,0.5)","y":["Sunnyside","Sunnyside"],"x":[540,580],"showlegend":false,"type":"box","orientation":"h","name":"Sunnyside","marker":{"color":"rgba(135,7,166,1)","line":{"color":"rgba(135,7,166,1)"}},"line":{"color":"rgba(135,7,166,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(142,12,164,0.5)","y":["Nolita","Nolita","Nolita","Nolita"],"x":[650,600,525,500],"showlegend":false,"type":"box","orientation":"h","name":"Nolita","marker":{"color":"rgba(142,12,164,1)","line":{"color":"rgba(142,12,164,1)"}},"line":{"color":"rgba(142,12,164,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(149,17,161,0.5)","y":["NoHo","NoHo","NoHo","NoHo","NoHo","NoHo"],"x":[500,533,525,600,985,989],"showlegend":false,"type":"box","orientation":"h","name":"NoHo","marker":{"color":"rgba(149,17,161,1)","line":{"color":"rgba(149,17,161,1)"}},"line":{"color":"rgba(149,17,161,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(156,23,158,0.5)","y":["Crown Heights","Crown Heights","Crown Heights"],"x":[575,500,575],"showlegend":false,"type":"box","orientation":"h","name":"Crown Heights","marker":{"color":"rgba(156,23,158,1)","line":{"color":"rgba(156,23,158,1)"}},"line":{"color":"rgba(156,23,158,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(162,29,154,0.5)","y":["Financial District","Financial District","Financial District","Financial District","Financial District","Financial District"],"x":[799,550,600,500,500,927],"showlegend":false,"type":"box","orientation":"h","name":"Financial District","marker":{"color":"rgba(162,29,154,1)","line":{"color":"rgba(162,29,154,1)"}},"line":{"color":"rgba(162,29,154,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(168,34,150,0.5)","y":["Little Italy","Little Italy","Little Italy"],"x":[575,699,500],"showlegend":false,"type":"box","orientation":"h","name":"Little Italy","marker":{"color":"rgba(168,34,150,1)","line":{"color":"rgba(168,34,150,1)"}},"line":{"color":"rgba(168,34,150,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(174,40,146,0.5)","y":["East Flatbush","East Flatbush"],"x":[650,525],"showlegend":false,"type":"box","orientation":"h","name":"East Flatbush","marker":{"color":"rgba(174,40,146,1)","line":{"color":"rgba(174,40,146,1)"}},"line":{"color":"rgba(174,40,146,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(180,46,141,0.5)","y":["Carroll Gardens","Carroll Gardens","Carroll Gardens","Carroll Gardens","Carroll Gardens","Carroll Gardens"],"x":[500,525,580,600,600,750],"showlegend":false,"type":"box","orientation":"h","name":"Carroll Gardens","marker":{"color":"rgba(180,46,141,1)","line":{"color":"rgba(180,46,141,1)"}},"line":{"color":"rgba(180,46,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(186,51,136,0.5)","y":["Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen","Hell's Kitchen"],"x":[500,750,567,565,500,588,500,599,500,600,550,500,550,618,875,900,850,590,860,600,875,950,600,567,599,539,500,695,600,525,500,800],"showlegend":false,"type":"box","orientation":"h","name":"Hell's Kitchen","marker":{"color":"rgba(186,51,136,1)","line":{"color":"rgba(186,51,136,1)"}},"line":{"color":"rgba(186,51,136,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(191,57,132,0.5)","y":["Bedford-Stuyvesant","Bedford-Stuyvesant","Bedford-Stuyvesant","Bedford-Stuyvesant","Bedford-Stuyvesant","Bedford-Stuyvesant","Bedford-Stuyvesant","Bedford-Stuyvesant","Bedford-Stuyvesant","Bedford-Stuyvesant","Bedford-Stuyvesant","Bedford-Stuyvesant"],"x":[1000,500,700,650,500,1000,541,900,500,500,800,500],"showlegend":false,"type":"box","orientation":"h","name":"Bedford-Stuyvesant","marker":{"color":"rgba(191,57,132,1)","line":{"color":"rgba(191,57,132,1)"}},"line":{"color":"rgba(191,57,132,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(196,62,127,0.5)","y":["Greenpoint","Greenpoint","Greenpoint","Greenpoint","Greenpoint"],"x":[749,599,599,599,650],"showlegend":false,"type":"box","orientation":"h","name":"Greenpoint","marker":{"color":"rgba(196,62,127,1)","line":{"color":"rgba(196,62,127,1)"}},"line":{"color":"rgba(196,62,127,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(201,68,122,0.5)","y":["Murray Hill","Murray Hill","Murray Hill","Murray Hill","Murray Hill","Murray Hill","Murray Hill"],"x":[595,599,595,650,925,500,700],"showlegend":false,"type":"box","orientation":"h","name":"Murray Hill","marker":{"color":"rgba(201,68,122,1)","line":{"color":"rgba(201,68,122,1)"}},"line":{"color":"rgba(201,68,122,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(205,74,118,0.5)","y":["SoHo","SoHo","SoHo","SoHo","SoHo","SoHo","SoHo","SoHo","SoHo","SoHo","SoHo","SoHo","SoHo","SoHo","SoHo","SoHo","SoHo","SoHo","SoHo","SoHo","SoHo","SoHo","SoHo"],"x":[721,800,575,649,900,589,595,899,662,525,595,850,500,1000,599,500,500,590,595,500,925,700,650],"showlegend":false,"type":"box","orientation":"h","name":"SoHo","marker":{"color":"rgba(205,74,118,1)","line":{"color":"rgba(205,74,118,1)"}},"line":{"color":"rgba(205,74,118,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(210,79,113,0.5)","y":["Clinton Hill","Clinton Hill","Clinton Hill","Clinton Hill","Clinton Hill","Clinton Hill","Clinton Hill","Clinton Hill","Clinton Hill","Clinton Hill","Clinton Hill","Clinton Hill","Clinton Hill","Clinton Hill"],"x":[550,600,500,595,899,976,999,600,600,849,600,790,500,500],"showlegend":false,"type":"box","orientation":"h","name":"Clinton Hill","marker":{"color":"rgba(210,79,113,1)","line":{"color":"rgba(210,79,113,1)"}},"line":{"color":"rgba(210,79,113,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(214,85,109,0.5)","y":["East Village","East Village","East Village","East Village","East Village","East Village","East Village","East Village","East Village","East Village","East Village","East Village","East Village","East Village","East Village","East Village","East Village","East Village","East Village","East Village","East Village","East Village"],"x":[544,950,815,750,675,600,600,600,600,600,900,600,700,580,525,600,550,900,630,500,750,500],"showlegend":false,"type":"box","orientation":"h","name":"East Village","marker":{"color":"rgba(214,85,109,1)","line":{"color":"rgba(214,85,109,1)"}},"line":{"color":"rgba(214,85,109,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(218,91,105,0.5)","y":["Harlem","Harlem","Harlem","Harlem","Harlem","Harlem","Harlem","Harlem","Harlem","Harlem","Harlem","Harlem"],"x":[675,600,650,1000,750,500,735,500,600,500,575,600],"showlegend":false,"type":"box","orientation":"h","name":"Harlem","marker":{"color":"rgba(218,91,105,1)","line":{"color":"rgba(218,91,105,1)"}},"line":{"color":"rgba(218,91,105,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(222,97,100,0.5)","y":["Lower East Side","Lower East Side","Lower East Side","Lower East Side","Lower East Side","Lower East Side","Lower East Side","Lower East Side","Lower East Side","Lower East Side","Lower East Side","Lower East Side"],"x":[500,1000,700,999,1000,500,600,700,500,600,586,600],"showlegend":false,"type":"box","orientation":"h","name":"Lower East Side","marker":{"color":"rgba(222,97,100,1)","line":{"color":"rgba(222,97,100,1)"}},"line":{"color":"rgba(222,97,100,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(226,102,96,0.5)","y":["Tribeca","Tribeca","Tribeca","Tribeca","Tribeca","Tribeca","Tribeca","Tribeca","Tribeca","Tribeca","Tribeca","Tribeca","Tribeca"],"x":[1000,600,550,700,750,877,550,999,590,800,595,600,575],"showlegend":false,"type":"box","orientation":"h","name":"Tribeca","marker":{"color":"rgba(226,102,96,1)","line":{"color":"rgba(226,102,96,1)"}},"line":{"color":"rgba(226,102,96,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(230,108,92,0.5)","y":["Upper East Side","Upper East Side","Upper East Side","Upper East Side","Upper East Side","Upper East Side","Upper East Side","Upper East Side","Upper East Side","Upper East Side","Upper East Side","Upper East Side","Upper East Side","Upper East Side","Upper East Side","Upper East Side","Upper East Side","Upper East Side","Upper East Side","Upper East Side"],"x":[689,500,600,900,795,589,500,550,600,899,749,800,595,700,600,995,700,600,500,500],"showlegend":false,"type":"box","orientation":"h","name":"Upper East Side","marker":{"color":"rgba(230,108,92,1)","line":{"color":"rgba(230,108,92,1)"}},"line":{"color":"rgba(230,108,92,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(233,114,87,0.5)","y":["Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side","Upper West Side"],"x":[560,650,899,950,599,800,500,509,799,980,550,600,500,850,600,650,500,500,721,500,500,550,500,800,599,500,795,650,550,600,650,600,725,600,500,949],"showlegend":false,"type":"box","orientation":"h","name":"Upper West Side","marker":{"color":"rgba(233,114,87,1)","line":{"color":"rgba(233,114,87,1)"}},"line":{"color":"rgba(233,114,87,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(237,121,83,0.5)","y":["West Village","West Village","West Village","West Village","West Village","West Village","West Village","West Village","West Village","West Village","West Village","West Village","West Village","West Village","West Village","West Village","West Village","West Village","West Village","West Village"],"x":[500,1000,625,530,600,500,600,600,611,550,650,550,555,700,550,595,700,675,515,725],"showlegend":false,"type":"box","orientation":"h","name":"West Village","marker":{"color":"rgba(237,121,83,1)","line":{"color":"rgba(237,121,83,1)"}},"line":{"color":"rgba(237,121,83,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(240,127,79,0.5)","y":["Park Slope","Park Slope","Park Slope","Park Slope","Park Slope","Park Slope"],"x":[545,550,650,568,650,990],"showlegend":false,"type":"box","orientation":"h","name":"Park Slope","marker":{"color":"rgba(240,127,79,1)","line":{"color":"rgba(240,127,79,1)"}},"line":{"color":"rgba(240,127,79,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(243,133,75,0.5)","y":["Flatbush","Flatbush","Flatbush","Flatbush"],"x":[500,740,500,800],"showlegend":false,"type":"box","orientation":"h","name":"Flatbush","marker":{"color":"rgba(243,133,75,1)","line":{"color":"rgba(243,133,75,1)"}},"line":{"color":"rgba(243,133,75,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(245,140,70,0.5)","y":["Arrochar"],"x":[625],"showlegend":false,"type":"box","orientation":"h","name":"Arrochar","marker":{"color":"rgba(245,140,70,1)","line":{"color":"rgba(245,140,70,1)"}},"line":{"color":"rgba(245,140,70,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(247,147,66,0.5)","y":["Greenwich Village","Greenwich Village","Greenwich Village","Greenwich Village","Greenwich Village","Greenwich Village","Greenwich Village","Greenwich Village","Greenwich Village","Greenwich Village","Greenwich Village","Greenwich Village","Greenwich Village","Greenwich Village"],"x":[850,700,649,834,550,650,500,500,650,601,599,600,590,850],"showlegend":false,"type":"box","orientation":"h","name":"Greenwich Village","marker":{"color":"rgba(247,147,66,1)","line":{"color":"rgba(247,147,66,1)"}},"line":{"color":"rgba(247,147,66,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(249,154,62,0.5)","y":["Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown","Midtown"],"x":[710,690,550,649,599,599,650,795,699,599,700,599,780,500,500,799,599,523,720,500,597,850,900,799,650,500,500,999,649,529,650,580,800,649,800,524,650,550,927,799,650,500,500],"showlegend":false,"type":"box","orientation":"h","name":"Midtown","marker":{"color":"rgba(249,154,62,1)","line":{"color":"rgba(249,154,62,1)"}},"line":{"color":"rgba(249,154,62,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(251,161,57,0.5)","y":["Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea","Chelsea"],"x":[820,649,500,500,691,550,700,549,600,775,900,596,595,699,800,699,1000,800,500,545,704,675,500,550,600,650,550,600,599,850,750,699,999,555,600,599,915,600,650,700],"showlegend":false,"type":"box","orientation":"h","name":"Chelsea","marker":{"color":"rgba(251,161,57,1)","line":{"color":"rgba(251,161,57,1)"}},"line":{"color":"rgba(251,161,57,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(252,168,53,0.5)","y":["Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg","Williamsburg"],"x":[600,600,700,550,700,500,500,799,500,500,945,500,699,1000,600,999,500,700,799,899,550,899,550,735],"showlegend":false,"type":"box","orientation":"h","name":"Williamsburg","marker":{"color":"rgba(252,168,53,1)","line":{"color":"rgba(252,168,53,1)"}},"line":{"color":"rgba(252,168,53,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(253,175,49,0.5)","y":["East Harlem","East Harlem","East Harlem"],"x":[529,990,650],"showlegend":false,"type":"box","orientation":"h","name":"East Harlem","marker":{"color":"rgba(253,175,49,1)","line":{"color":"rgba(253,175,49,1)"}},"line":{"color":"rgba(253,175,49,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(254,183,45,0.5)","y":["Long Island City"],"x":[650],"showlegend":false,"type":"box","orientation":"h","name":"Long Island City","marker":{"color":"rgba(254,183,45,1)","line":{"color":"rgba(254,183,45,1)"}},"line":{"color":"rgba(254,183,45,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(254,190,42,0.5)","y":["Prospect-Lefferts Gardens"],"x":[650],"showlegend":false,"type":"box","orientation":"h","name":"Prospect-Lefferts Gardens","marker":{"color":"rgba(254,190,42,1)","line":{"color":"rgba(254,190,42,1)"}},"line":{"color":"rgba(254,190,42,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(253,198,39,0.5)","y":["Flatiron District","Flatiron District","Flatiron District","Flatiron District","Flatiron District","Flatiron District","Flatiron District","Flatiron District","Flatiron District","Flatiron District"],"x":[525,600,850,550,699,700,826,700,650,838],"showlegend":false,"type":"box","orientation":"h","name":"Flatiron District","marker":{"color":"rgba(253,198,39,1)","line":{"color":"rgba(253,198,39,1)"}},"line":{"color":"rgba(253,198,39,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(252,206,37,0.5)","y":["East Elmhurst"],"x":[700],"showlegend":false,"type":"box","orientation":"h","name":"East Elmhurst","marker":{"color":"rgba(252,206,37,1)","line":{"color":"rgba(252,206,37,1)"}},"line":{"color":"rgba(252,206,37,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(251,215,36,0.5)","y":["Kips Bay","Kips Bay","Kips Bay","Kips Bay","Kips Bay","Kips Bay","Kips Bay","Kips Bay","Kips Bay"],"x":[700,1000,750,650,600,750,650,927,550],"showlegend":false,"type":"box","orientation":"h","name":"Kips Bay","marker":{"color":"rgba(251,215,36,1)","line":{"color":"rgba(251,215,36,1)"}},"line":{"color":"rgba(251,215,36,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(248,223,37,0.5)","y":["Fort Greene","Fort Greene"],"x":[800,649],"showlegend":false,"type":"box","orientation":"h","name":"Fort Greene","marker":{"color":"rgba(248,223,37,1)","line":{"color":"rgba(248,223,37,1)"}},"line":{"color":"rgba(248,223,37,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(246,232,38,0.5)","y":["Bay Ridge"],"x":[800],"showlegend":false,"type":"box","orientation":"h","name":"Bay Ridge","marker":{"color":"rgba(246,232,38,1)","line":{"color":"rgba(246,232,38,1)"}},"line":{"color":"rgba(246,232,38,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(243,240,39,0.5)","y":["Brooklyn Heights","Brooklyn Heights","Brooklyn Heights"],"x":[800,500,800],"showlegend":false,"type":"box","orientation":"h","name":"Brooklyn Heights","marker":{"color":"rgba(243,240,39,1)","line":{"color":"rgba(243,240,39,1)"}},"line":{"color":"rgba(243,240,39,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(240,249,33,0.5)","y":["Flushing","Flushing"],"x":[895,950],"showlegend":false,"type":"box","orientation":"h","name":"Flushing","marker":{"color":"rgba(240,249,33,1)","line":{"color":"rgba(240,249,33,1)"}},"line":{"color":"rgba(240,249,33,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="bar-plot" class="section level2">
+<h2>Bar plot</h2>
+<pre class="r"><code>nyc_airbnb %&gt;% 
+  count(neighbourhood) %&gt;% 
+  mutate(neighbourhood = fct_reorder(neighbourhood, n)) %&gt;% 
+  plot_ly(
+    x = ~n, y = ~neighbourhood, color = ~neighbourhood, 
+    type = &quot;bar&quot;, colors = &quot;plasma&quot;, showlegend = FALSE)</code></pre>
+<div id="htmlwidget-0fa02e9d48558571c077" style="width:768px;height:576px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0fa02e9d48558571c077">{"x":{"visdat":{"c9d53080050":["function () ","plotlyVisDat"]},"cur_data":"c9d53080050","attrs":{"c9d53080050":{"x":{},"y":{},"showlegend":false,"color":{},"colors":"plasma","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"n"},"yaxis":{"domain":[0,1],"automargin":true,"title":"neighbourhood","type":"category","categoryorder":"array","categoryarray":["Arrochar","Bay Ridge","Canarsie","East Elmhurst","Forest Hills","Fort Hamilton","Kensington","Long Island City","Mill Basin","Prospect-Lefferts Gardens","Williamsbridge","Windsor Terrace","Boerum Hill","East Flatbush","Flushing","Fort Greene","Gowanus","Sunnyside","Astoria","Brooklyn Heights","Crown Heights","East Harlem","Little Italy","Flatbush","Nolita","Bushwick","Gramercy","Greenpoint","Carroll Gardens","Chinatown","Financial District","NoHo","Park Slope","Murray Hill","Theater District","Kips Bay","Flatiron District","Bedford-Stuyvesant","Harlem","Lower East Side","Tribeca","Clinton Hill","Greenwich Village","Upper East Side","West Village","East Village","SoHo","Williamsburg","Hell's Kitchen","Upper West Side","Chelsea","Midtown"]},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[1],"y":["Arrochar"],"showlegend":false,"type":"bar","orientation":"h","name":"Arrochar","marker":{"color":"rgba(13,8,135,1)","line":{"color":"rgba(13,8,135,1)"}},"textfont":{"color":"rgba(13,8,135,1)"},"error_y":{"color":"rgba(13,8,135,1)"},"error_x":{"color":"rgba(13,8,135,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1],"y":["Bay Ridge"],"showlegend":false,"type":"bar","orientation":"h","name":"Bay Ridge","marker":{"color":"rgba(27,6,141,1)","line":{"color":"rgba(27,6,141,1)"}},"textfont":{"color":"rgba(27,6,141,1)"},"error_y":{"color":"rgba(27,6,141,1)"},"error_x":{"color":"rgba(27,6,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1],"y":["Canarsie"],"showlegend":false,"type":"bar","orientation":"h","name":"Canarsie","marker":{"color":"rgba(38,5,145,1)","line":{"color":"rgba(38,5,145,1)"}},"textfont":{"color":"rgba(38,5,145,1)"},"error_y":{"color":"rgba(38,5,145,1)"},"error_x":{"color":"rgba(38,5,145,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1],"y":["East Elmhurst"],"showlegend":false,"type":"bar","orientation":"h","name":"East Elmhurst","marker":{"color":"rgba(47,5,150,1)","line":{"color":"rgba(47,5,150,1)"}},"textfont":{"color":"rgba(47,5,150,1)"},"error_y":{"color":"rgba(47,5,150,1)"},"error_x":{"color":"rgba(47,5,150,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1],"y":["Forest Hills"],"showlegend":false,"type":"bar","orientation":"h","name":"Forest Hills","marker":{"color":"rgba(56,4,154,1)","line":{"color":"rgba(56,4,154,1)"}},"textfont":{"color":"rgba(56,4,154,1)"},"error_y":{"color":"rgba(56,4,154,1)"},"error_x":{"color":"rgba(56,4,154,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1],"y":["Fort Hamilton"],"showlegend":false,"type":"bar","orientation":"h","name":"Fort Hamilton","marker":{"color":"rgba(65,4,157,1)","line":{"color":"rgba(65,4,157,1)"}},"textfont":{"color":"rgba(65,4,157,1)"},"error_y":{"color":"rgba(65,4,157,1)"},"error_x":{"color":"rgba(65,4,157,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1],"y":["Kensington"],"showlegend":false,"type":"bar","orientation":"h","name":"Kensington","marker":{"color":"rgba(73,3,160,1)","line":{"color":"rgba(73,3,160,1)"}},"textfont":{"color":"rgba(73,3,160,1)"},"error_y":{"color":"rgba(73,3,160,1)"},"error_x":{"color":"rgba(73,3,160,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1],"y":["Long Island City"],"showlegend":false,"type":"bar","orientation":"h","name":"Long Island City","marker":{"color":"rgba(81,2,163,1)","line":{"color":"rgba(81,2,163,1)"}},"textfont":{"color":"rgba(81,2,163,1)"},"error_y":{"color":"rgba(81,2,163,1)"},"error_x":{"color":"rgba(81,2,163,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1],"y":["Mill Basin"],"showlegend":false,"type":"bar","orientation":"h","name":"Mill Basin","marker":{"color":"rgba(89,1,165,1)","line":{"color":"rgba(89,1,165,1)"}},"textfont":{"color":"rgba(89,1,165,1)"},"error_y":{"color":"rgba(89,1,165,1)"},"error_x":{"color":"rgba(89,1,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1],"y":["Prospect-Lefferts Gardens"],"showlegend":false,"type":"bar","orientation":"h","name":"Prospect-Lefferts Gardens","marker":{"color":"rgba(97,0,167,1)","line":{"color":"rgba(97,0,167,1)"}},"textfont":{"color":"rgba(97,0,167,1)"},"error_y":{"color":"rgba(97,0,167,1)"},"error_x":{"color":"rgba(97,0,167,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1],"y":["Williamsbridge"],"showlegend":false,"type":"bar","orientation":"h","name":"Williamsbridge","marker":{"color":"rgba(105,0,168,1)","line":{"color":"rgba(105,0,168,1)"}},"textfont":{"color":"rgba(105,0,168,1)"},"error_y":{"color":"rgba(105,0,168,1)"},"error_x":{"color":"rgba(105,0,168,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1],"y":["Windsor Terrace"],"showlegend":false,"type":"bar","orientation":"h","name":"Windsor Terrace","marker":{"color":"rgba(113,0,168,1)","line":{"color":"rgba(113,0,168,1)"}},"textfont":{"color":"rgba(113,0,168,1)"},"error_y":{"color":"rgba(113,0,168,1)"},"error_x":{"color":"rgba(113,0,168,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2],"y":["Boerum Hill"],"showlegend":false,"type":"bar","orientation":"h","name":"Boerum Hill","marker":{"color":"rgba(120,1,168,1)","line":{"color":"rgba(120,1,168,1)"}},"textfont":{"color":"rgba(120,1,168,1)"},"error_y":{"color":"rgba(120,1,168,1)"},"error_x":{"color":"rgba(120,1,168,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2],"y":["East Flatbush"],"showlegend":false,"type":"bar","orientation":"h","name":"East Flatbush","marker":{"color":"rgba(128,4,168,1)","line":{"color":"rgba(128,4,168,1)"}},"textfont":{"color":"rgba(128,4,168,1)"},"error_y":{"color":"rgba(128,4,168,1)"},"error_x":{"color":"rgba(128,4,168,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2],"y":["Flushing"],"showlegend":false,"type":"bar","orientation":"h","name":"Flushing","marker":{"color":"rgba(135,7,166,1)","line":{"color":"rgba(135,7,166,1)"}},"textfont":{"color":"rgba(135,7,166,1)"},"error_y":{"color":"rgba(135,7,166,1)"},"error_x":{"color":"rgba(135,7,166,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2],"y":["Fort Greene"],"showlegend":false,"type":"bar","orientation":"h","name":"Fort Greene","marker":{"color":"rgba(142,12,164,1)","line":{"color":"rgba(142,12,164,1)"}},"textfont":{"color":"rgba(142,12,164,1)"},"error_y":{"color":"rgba(142,12,164,1)"},"error_x":{"color":"rgba(142,12,164,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2],"y":["Gowanus"],"showlegend":false,"type":"bar","orientation":"h","name":"Gowanus","marker":{"color":"rgba(149,17,161,1)","line":{"color":"rgba(149,17,161,1)"}},"textfont":{"color":"rgba(149,17,161,1)"},"error_y":{"color":"rgba(149,17,161,1)"},"error_x":{"color":"rgba(149,17,161,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2],"y":["Sunnyside"],"showlegend":false,"type":"bar","orientation":"h","name":"Sunnyside","marker":{"color":"rgba(156,23,158,1)","line":{"color":"rgba(156,23,158,1)"}},"textfont":{"color":"rgba(156,23,158,1)"},"error_y":{"color":"rgba(156,23,158,1)"},"error_x":{"color":"rgba(156,23,158,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[3],"y":["Astoria"],"showlegend":false,"type":"bar","orientation":"h","name":"Astoria","marker":{"color":"rgba(162,29,154,1)","line":{"color":"rgba(162,29,154,1)"}},"textfont":{"color":"rgba(162,29,154,1)"},"error_y":{"color":"rgba(162,29,154,1)"},"error_x":{"color":"rgba(162,29,154,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[3],"y":["Brooklyn Heights"],"showlegend":false,"type":"bar","orientation":"h","name":"Brooklyn Heights","marker":{"color":"rgba(168,34,150,1)","line":{"color":"rgba(168,34,150,1)"}},"textfont":{"color":"rgba(168,34,150,1)"},"error_y":{"color":"rgba(168,34,150,1)"},"error_x":{"color":"rgba(168,34,150,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[3],"y":["Crown Heights"],"showlegend":false,"type":"bar","orientation":"h","name":"Crown Heights","marker":{"color":"rgba(174,40,146,1)","line":{"color":"rgba(174,40,146,1)"}},"textfont":{"color":"rgba(174,40,146,1)"},"error_y":{"color":"rgba(174,40,146,1)"},"error_x":{"color":"rgba(174,40,146,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[3],"y":["East Harlem"],"showlegend":false,"type":"bar","orientation":"h","name":"East Harlem","marker":{"color":"rgba(180,46,141,1)","line":{"color":"rgba(180,46,141,1)"}},"textfont":{"color":"rgba(180,46,141,1)"},"error_y":{"color":"rgba(180,46,141,1)"},"error_x":{"color":"rgba(180,46,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[3],"y":["Little Italy"],"showlegend":false,"type":"bar","orientation":"h","name":"Little Italy","marker":{"color":"rgba(186,51,136,1)","line":{"color":"rgba(186,51,136,1)"}},"textfont":{"color":"rgba(186,51,136,1)"},"error_y":{"color":"rgba(186,51,136,1)"},"error_x":{"color":"rgba(186,51,136,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[4],"y":["Flatbush"],"showlegend":false,"type":"bar","orientation":"h","name":"Flatbush","marker":{"color":"rgba(191,57,132,1)","line":{"color":"rgba(191,57,132,1)"}},"textfont":{"color":"rgba(191,57,132,1)"},"error_y":{"color":"rgba(191,57,132,1)"},"error_x":{"color":"rgba(191,57,132,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[4],"y":["Nolita"],"showlegend":false,"type":"bar","orientation":"h","name":"Nolita","marker":{"color":"rgba(196,62,127,1)","line":{"color":"rgba(196,62,127,1)"}},"textfont":{"color":"rgba(196,62,127,1)"},"error_y":{"color":"rgba(196,62,127,1)"},"error_x":{"color":"rgba(196,62,127,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[5],"y":["Bushwick"],"showlegend":false,"type":"bar","orientation":"h","name":"Bushwick","marker":{"color":"rgba(201,68,122,1)","line":{"color":"rgba(201,68,122,1)"}},"textfont":{"color":"rgba(201,68,122,1)"},"error_y":{"color":"rgba(201,68,122,1)"},"error_x":{"color":"rgba(201,68,122,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[5],"y":["Gramercy"],"showlegend":false,"type":"bar","orientation":"h","name":"Gramercy","marker":{"color":"rgba(205,74,118,1)","line":{"color":"rgba(205,74,118,1)"}},"textfont":{"color":"rgba(205,74,118,1)"},"error_y":{"color":"rgba(205,74,118,1)"},"error_x":{"color":"rgba(205,74,118,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[5],"y":["Greenpoint"],"showlegend":false,"type":"bar","orientation":"h","name":"Greenpoint","marker":{"color":"rgba(210,79,113,1)","line":{"color":"rgba(210,79,113,1)"}},"textfont":{"color":"rgba(210,79,113,1)"},"error_y":{"color":"rgba(210,79,113,1)"},"error_x":{"color":"rgba(210,79,113,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[6],"y":["Carroll Gardens"],"showlegend":false,"type":"bar","orientation":"h","name":"Carroll Gardens","marker":{"color":"rgba(214,85,109,1)","line":{"color":"rgba(214,85,109,1)"}},"textfont":{"color":"rgba(214,85,109,1)"},"error_y":{"color":"rgba(214,85,109,1)"},"error_x":{"color":"rgba(214,85,109,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[6],"y":["Chinatown"],"showlegend":false,"type":"bar","orientation":"h","name":"Chinatown","marker":{"color":"rgba(218,91,105,1)","line":{"color":"rgba(218,91,105,1)"}},"textfont":{"color":"rgba(218,91,105,1)"},"error_y":{"color":"rgba(218,91,105,1)"},"error_x":{"color":"rgba(218,91,105,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[6],"y":["Financial District"],"showlegend":false,"type":"bar","orientation":"h","name":"Financial District","marker":{"color":"rgba(222,97,100,1)","line":{"color":"rgba(222,97,100,1)"}},"textfont":{"color":"rgba(222,97,100,1)"},"error_y":{"color":"rgba(222,97,100,1)"},"error_x":{"color":"rgba(222,97,100,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[6],"y":["NoHo"],"showlegend":false,"type":"bar","orientation":"h","name":"NoHo","marker":{"color":"rgba(226,102,96,1)","line":{"color":"rgba(226,102,96,1)"}},"textfont":{"color":"rgba(226,102,96,1)"},"error_y":{"color":"rgba(226,102,96,1)"},"error_x":{"color":"rgba(226,102,96,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[6],"y":["Park Slope"],"showlegend":false,"type":"bar","orientation":"h","name":"Park Slope","marker":{"color":"rgba(230,108,92,1)","line":{"color":"rgba(230,108,92,1)"}},"textfont":{"color":"rgba(230,108,92,1)"},"error_y":{"color":"rgba(230,108,92,1)"},"error_x":{"color":"rgba(230,108,92,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[7],"y":["Murray Hill"],"showlegend":false,"type":"bar","orientation":"h","name":"Murray Hill","marker":{"color":"rgba(233,114,87,1)","line":{"color":"rgba(233,114,87,1)"}},"textfont":{"color":"rgba(233,114,87,1)"},"error_y":{"color":"rgba(233,114,87,1)"},"error_x":{"color":"rgba(233,114,87,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[7],"y":["Theater District"],"showlegend":false,"type":"bar","orientation":"h","name":"Theater District","marker":{"color":"rgba(237,121,83,1)","line":{"color":"rgba(237,121,83,1)"}},"textfont":{"color":"rgba(237,121,83,1)"},"error_y":{"color":"rgba(237,121,83,1)"},"error_x":{"color":"rgba(237,121,83,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[9],"y":["Kips Bay"],"showlegend":false,"type":"bar","orientation":"h","name":"Kips Bay","marker":{"color":"rgba(240,127,79,1)","line":{"color":"rgba(240,127,79,1)"}},"textfont":{"color":"rgba(240,127,79,1)"},"error_y":{"color":"rgba(240,127,79,1)"},"error_x":{"color":"rgba(240,127,79,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[10],"y":["Flatiron District"],"showlegend":false,"type":"bar","orientation":"h","name":"Flatiron District","marker":{"color":"rgba(243,133,75,1)","line":{"color":"rgba(243,133,75,1)"}},"textfont":{"color":"rgba(243,133,75,1)"},"error_y":{"color":"rgba(243,133,75,1)"},"error_x":{"color":"rgba(243,133,75,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[12],"y":["Bedford-Stuyvesant"],"showlegend":false,"type":"bar","orientation":"h","name":"Bedford-Stuyvesant","marker":{"color":"rgba(245,140,70,1)","line":{"color":"rgba(245,140,70,1)"}},"textfont":{"color":"rgba(245,140,70,1)"},"error_y":{"color":"rgba(245,140,70,1)"},"error_x":{"color":"rgba(245,140,70,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[12],"y":["Harlem"],"showlegend":false,"type":"bar","orientation":"h","name":"Harlem","marker":{"color":"rgba(247,147,66,1)","line":{"color":"rgba(247,147,66,1)"}},"textfont":{"color":"rgba(247,147,66,1)"},"error_y":{"color":"rgba(247,147,66,1)"},"error_x":{"color":"rgba(247,147,66,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[12],"y":["Lower East Side"],"showlegend":false,"type":"bar","orientation":"h","name":"Lower East Side","marker":{"color":"rgba(249,154,62,1)","line":{"color":"rgba(249,154,62,1)"}},"textfont":{"color":"rgba(249,154,62,1)"},"error_y":{"color":"rgba(249,154,62,1)"},"error_x":{"color":"rgba(249,154,62,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[13],"y":["Tribeca"],"showlegend":false,"type":"bar","orientation":"h","name":"Tribeca","marker":{"color":"rgba(251,161,57,1)","line":{"color":"rgba(251,161,57,1)"}},"textfont":{"color":"rgba(251,161,57,1)"},"error_y":{"color":"rgba(251,161,57,1)"},"error_x":{"color":"rgba(251,161,57,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[14],"y":["Clinton Hill"],"showlegend":false,"type":"bar","orientation":"h","name":"Clinton Hill","marker":{"color":"rgba(252,168,53,1)","line":{"color":"rgba(252,168,53,1)"}},"textfont":{"color":"rgba(252,168,53,1)"},"error_y":{"color":"rgba(252,168,53,1)"},"error_x":{"color":"rgba(252,168,53,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[14],"y":["Greenwich Village"],"showlegend":false,"type":"bar","orientation":"h","name":"Greenwich Village","marker":{"color":"rgba(253,175,49,1)","line":{"color":"rgba(253,175,49,1)"}},"textfont":{"color":"rgba(253,175,49,1)"},"error_y":{"color":"rgba(253,175,49,1)"},"error_x":{"color":"rgba(253,175,49,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[20],"y":["Upper East Side"],"showlegend":false,"type":"bar","orientation":"h","name":"Upper East Side","marker":{"color":"rgba(254,183,45,1)","line":{"color":"rgba(254,183,45,1)"}},"textfont":{"color":"rgba(254,183,45,1)"},"error_y":{"color":"rgba(254,183,45,1)"},"error_x":{"color":"rgba(254,183,45,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[20],"y":["West Village"],"showlegend":false,"type":"bar","orientation":"h","name":"West Village","marker":{"color":"rgba(254,190,42,1)","line":{"color":"rgba(254,190,42,1)"}},"textfont":{"color":"rgba(254,190,42,1)"},"error_y":{"color":"rgba(254,190,42,1)"},"error_x":{"color":"rgba(254,190,42,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[22],"y":["East Village"],"showlegend":false,"type":"bar","orientation":"h","name":"East Village","marker":{"color":"rgba(253,198,39,1)","line":{"color":"rgba(253,198,39,1)"}},"textfont":{"color":"rgba(253,198,39,1)"},"error_y":{"color":"rgba(253,198,39,1)"},"error_x":{"color":"rgba(253,198,39,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[23],"y":["SoHo"],"showlegend":false,"type":"bar","orientation":"h","name":"SoHo","marker":{"color":"rgba(252,206,37,1)","line":{"color":"rgba(252,206,37,1)"}},"textfont":{"color":"rgba(252,206,37,1)"},"error_y":{"color":"rgba(252,206,37,1)"},"error_x":{"color":"rgba(252,206,37,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[24],"y":["Williamsburg"],"showlegend":false,"type":"bar","orientation":"h","name":"Williamsburg","marker":{"color":"rgba(251,215,36,1)","line":{"color":"rgba(251,215,36,1)"}},"textfont":{"color":"rgba(251,215,36,1)"},"error_y":{"color":"rgba(251,215,36,1)"},"error_x":{"color":"rgba(251,215,36,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[32],"y":["Hell's Kitchen"],"showlegend":false,"type":"bar","orientation":"h","name":"Hell's Kitchen","marker":{"color":"rgba(248,223,37,1)","line":{"color":"rgba(248,223,37,1)"}},"textfont":{"color":"rgba(248,223,37,1)"},"error_y":{"color":"rgba(248,223,37,1)"},"error_x":{"color":"rgba(248,223,37,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[36],"y":["Upper West Side"],"showlegend":false,"type":"bar","orientation":"h","name":"Upper West Side","marker":{"color":"rgba(246,232,38,1)","line":{"color":"rgba(246,232,38,1)"}},"textfont":{"color":"rgba(246,232,38,1)"},"error_y":{"color":"rgba(246,232,38,1)"},"error_x":{"color":"rgba(246,232,38,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[40],"y":["Chelsea"],"showlegend":false,"type":"bar","orientation":"h","name":"Chelsea","marker":{"color":"rgba(243,240,39,1)","line":{"color":"rgba(243,240,39,1)"}},"textfont":{"color":"rgba(243,240,39,1)"},"error_y":{"color":"rgba(243,240,39,1)"},"error_x":{"color":"rgba(243,240,39,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[43],"y":["Midtown"],"showlegend":false,"type":"bar","orientation":"h","name":"Midtown","marker":{"color":"rgba(240,249,33,1)","line":{"color":"rgba(240,249,33,1)"}},"textfont":{"color":"rgba(240,249,33,1)"},"error_y":{"color":"rgba(240,249,33,1)"},"error_x":{"color":"rgba(240,249,33,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

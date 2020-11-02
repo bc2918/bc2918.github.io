@@ -1,5 +1,5 @@
 ---
-title: "Beibei's website"
+title: "Beibei Cao's website"
 output: 
   html_document:
     code_folding: hide
@@ -7,7 +7,7 @@ output:
     toc_float: true
 ---
 
-This is my work for homework 4!
+Welcome to my personal website!!
 
 
 ## Link to my github page
