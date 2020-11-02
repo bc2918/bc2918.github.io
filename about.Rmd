@@ -7,6 +7,24 @@ output:
     toc_float: true
 ---
 
-## My resume
+#### Education
+* **Columbia University**
+  + M.S in Biostatistics
+* **University of California, San Diego**
+  + B.S in Bioinformatics
+  + Magna Cum Laude, Phi Beta Kappa
+  
+#### Skills
+* R, Python, SQL, Linux, Latex
+* Recombinant DNA techniques 
+
+#### Research Experience
+* **Research Assistant, Gleeson Laboratory for Pediatric Brain Diseases (11, 2018 – 8, 2020)**
+  + Characterization of Mosaic Variants in Healthy Human Brain and Tissue Samples
+  + Data Analysis of Whole Exomes from 500 Families with Myelomeningocele
+  
+* **Research Assistant, Siegel Laboratory (8, 2018 – 10, 2018)**
+  + Synthesis of FAHFA Family Derivatives and Testing of Bioactivity
+
 
 
