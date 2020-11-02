@@ -7,17 +7,15 @@ output:
     toc_float: true
 ---
 
-Welcome to my personal website!!
+Welcome to my personal website!
 
+![](https://i.pinimg.com/originals/e8/36/7f/e8367fd57585c190139ca40de9c7afe3.gif)
 
-## Link to my github page
+## More about me
 
-[My github](https://github.com/bc2918)
+* [My github](https://github.com/bc2918)
 
-
-## Link to my resume
-
-[About me](about.html)
+* [My resume](about.html)
 
 
 ## My cats {.tabset}
