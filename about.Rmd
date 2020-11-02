@@ -7,18 +7,30 @@ output:
     toc_float: true
 ---
 
+<<<<<<< HEAD
 ## Education
+=======
+#### Education
+>>>>>>> ae6d505966f01cdf7375aa514d4bd253a7b9aacc
 * **Columbia University**
   + M.S in Biostatistics
 * **University of California, San Diego**
   + B.S in Bioinformatics
   + Magna Cum Laude, Phi Beta Kappa
   
+<<<<<<< HEAD
 ## Skills
 * R, Python, SQL, Linux, Latex
 * Recombinant DNA techniques 
 
 ## Research Experience
+=======
+#### Skills
+* R, Python, SQL, Linux, Latex
+* Recombinant DNA techniques 
+
+#### Research Experience
+>>>>>>> ae6d505966f01cdf7375aa514d4bd253a7b9aacc
 * **Research Assistant, Gleeson Laboratory for Pediatric Brain Diseases (11, 2018 – 8, 2020)**
   + Characterization of Mosaic Variants in Healthy Human Brain and Tissue Samples
   + Data Analysis of Whole Exomes from 500 Families with Myelomeningocele
@@ -26,10 +38,13 @@ output:
 * **Research Assistant, Siegel Laboratory (8, 2018 – 10, 2018)**
   + Synthesis of FAHFA Family Derivatives and Testing of Bioactivity
 
+<<<<<<< HEAD
 ## Contact
 * Address: 17295 Thicket Ln, CA 92886
 * Email: bc2918@cumc.columbia.edu
 * Phone: 858-999-7527
 * Instagram: @bbeii.c
+=======
+>>>>>>> ae6d505966f01cdf7375aa514d4bd253a7b9aacc
 
 
