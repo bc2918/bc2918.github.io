@@ -1,37 +1,24 @@
 ---
-title: "NYC Resturants Inspection"
+title: "Dashboard"
 output: 
-  html_document:
-    toc: true
-    toc_float: true
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    source: embed
     code_folding: hide
+    theme: journal
 ---
 
-# Loading data
-
-```{r message = FALSE, warning = FALSE, echo = FALSE}
+```{r include = FALSE}
 library(tidyverse)
 library(p8105.datasets)
 library(plotly)
+library(flexdashboard)
 
-knitr::opts_chunk$set(
-	echo = TRUE,
-	warning = FALSE,
-	message = FALSE,
-	fig.width = 6, fig.height = 5
-)
-
-scale_colour_discrete = scale_colour_viridis_d
-scale_fill_discrete = scale_fill_viridis_d
-
-# load data set
-data("rest_inspec")
 ```
 
-The NYC restaurant inspection data was filtered to focus on Chinese restaurants with score over 60.
-
-```{r}
-# select Chinese restaurant
+```{r include = FALSE}
+data("rest_inspec")
 rest_inspec = 
   rest_inspec %>%
   janitor::clean_names() %>% 
@@ -40,16 +27,14 @@ rest_inspec =
     score > 60
   ) %>%
   mutate(inspection_date = as.Date(inspection_date))
-  
 ```
 
+Column {data-width=650}
+-----------------------------------------------------------------------
 
-# Plotly plots
-
-## Scatter plot
+### Chart A
 
 ```{r}
-# plot score over time
 rest_inspec %>% 
   group_by(boro) %>% 
   mutate(text_label = str_c("Resturants: ", dba, "\nScore: ", score)) %>% 
@@ -64,10 +49,13 @@ rest_inspec %>%
   layout(legend = list(x = 0.05, y = 0.9))
 ```
 
-## Box plot
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
 
 ```{r}
-# plot score for each neighborhood
 rest_inspec %>% 
   group_by(boro) %>% 
   plot_ly(
@@ -80,13 +68,11 @@ rest_inspec %>%
   )
 ```
 
-## Bar plot
+### Chart C
 
 ```{r}
-# plot restaurant counts for each neighborhood
 rest_inspec %>%
   count(boro) %>%
-  mutate(boro = fct_reorder(boro, n)) %>%
   plot_ly(
     x = ~boro, y = ~n, color = ~boro, 
     type = "bar", colors = "plasma", showlegend = FALSE) %>%

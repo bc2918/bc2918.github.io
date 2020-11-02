@@ -2,9 +2,11 @@
 title: "Beibei Cao's website"
 output: 
   html_document:
-    code_folding: hide
+    navbar:
+      title: "Home"
     toc: true
     toc_float: true
+    code_folding: hide
 ---
 
 Welcome to my personal website!
